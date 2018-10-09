@@ -3,4 +3,7 @@
     <string name="title_user">User</string>
     <string name="title_repos">Repositories</string>
     <string name="title_search">Search</string>
+
+    <string name="user_info">User Info Fragment</string>
+    <string name="user_repos_fragment">User repos fragment</string>
 </resources>
