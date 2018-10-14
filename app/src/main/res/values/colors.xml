@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Main colors-->
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="icon_color">#006DF0</color>
-    <color name="color_bottom_nav_icon">#006DF0</color>
+
+    <!--Icon colors-->
+    <color name="icon_color_search">@color/colorAccent</color>
+    <color name="icon_color_bottom_nav">@color/colorAccent</color>
+
+    <!--Background colors-->
+    <color name="background_color_search">#623A231A</color>
 </resources>

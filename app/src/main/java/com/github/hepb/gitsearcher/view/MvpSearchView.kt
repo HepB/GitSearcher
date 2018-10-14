@@ -4,5 +4,4 @@ import com.arellomobile.mvp.MvpView
 
 interface MvpSearchView: MvpView {
     fun setFoundedUsers(userName: String)
-    fun setSearchText(string: String)
 }
