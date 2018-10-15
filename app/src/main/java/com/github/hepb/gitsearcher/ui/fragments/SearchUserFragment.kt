@@ -70,7 +70,7 @@ class SearchUserFragment : MvpAppCompatFragment(), MvpSearchView {
     }
 
     private fun prepareViewAndSearchUser() {
-        hideKeyboard(context, searchView)
+        searchView.hideKeyboard()
         searchPresenter.searchUser(searchView.text.toString())
     }
 }
