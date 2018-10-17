@@ -4,27 +4,37 @@ import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.github.hepb.gitsearcher.view.MvpSearchView
-import io.reactivex.Single
+
 import io.reactivex.disposables.Disposable
+import io.reactivex.subjects.PublishSubject
 
 @InjectViewState
 class SearchPresenter : MvpPresenter<MvpSearchView>() {
-    private val disposables: MutableList<Disposable> = mutableListOf()
+
+    private var disposable: Disposable? = null
+    private lateinit var publishSubject: PublishSubject<String>
 
     fun searchUser(userName: String) {
         //тут изо всех сил будем искать юзера
     }
 
     fun listenSearchText(text: String) {
-        val single = Single.just(text)
-        val disposable = single.subscribe { result ->
-            Log.i("SearchPresenter", result)
+        if(disposable == null ) {
+            disposable = createSubscribe()
         }
-        disposables.add(disposable)
+        publishSubject.onNext(text)
     }
 
     override fun onDestroy() {
-        disposables.forEach { it.dispose() }
+        disposable?.dispose()
         super.onDestroy()
     }
+
+    private fun createSubscribe(): Disposable {
+        publishSubject = PublishSubject.create()
+        return  publishSubject.filter { it.isNotEmpty() }.subscribe { result ->
+            Log.i("SearchPresenter", "PublishSubject $result")
+        }
+    }
+
 }

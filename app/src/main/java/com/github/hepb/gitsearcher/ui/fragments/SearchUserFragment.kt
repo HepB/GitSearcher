@@ -11,6 +11,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 
 import com.github.hepb.gitsearcher.R
 import com.github.hepb.gitsearcher.presenter.SearchPresenter
+import com.github.hepb.gitsearcher.utils.hideKeyboard
 import com.github.hepb.gitsearcher.view.MvpSearchView
 import kotlinx.android.synthetic.main.fragment_search_user.*
 import timber.log.Timber
@@ -41,19 +42,35 @@ class SearchUserFragment : MvpAppCompatFragment(), MvpSearchView {
         Timber.i("Set founded users")
     }
 
-    override fun setSearchText(string: String) {
-        searchView.setText(string)
+    //init view methods
+    //TODO: по хорошему тут бы сделать CustomView, и вынести его в отдельный модуль, но это потом
+    private fun initView() {
+        initSearchViewBehavior()
+        initSearchButtonBehavior()
     }
 
-    private fun initView() {
+    private fun initSearchViewBehavior() {
         searchView.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 searchPresenter.listenSearchText(s.toString())
             }
         })
+        searchView.setOnEditorActionListener { _, _, _ ->
+            prepareViewAndSearchUser()
+            false
+        }
+    }
+
+    private fun initSearchButtonBehavior() {
+        buttonSearch.setOnClickListener { view ->
+            prepareViewAndSearchUser()
+        }
+    }
+
+    private fun prepareViewAndSearchUser() {
+        searchView.hideKeyboard()
+        searchPresenter.searchUser(searchView.text.toString())
     }
 }
