@@ -1,6 +1,5 @@
 package com.github.hepb.gitsearcher.presenter
 
-import android.annotation.SuppressLint
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
@@ -29,9 +28,6 @@ class SearchPresenter : MvpPresenter<MvpSearchView>() {
     override fun attachView(view: MvpSearchView?) {
         super.attachView(view)
         Log.i("SearchPresenter", "onAttach")
-        if(users.isNotEmpty()) {
-            viewState.setFoundedUsers(users)
-        }
     }
 
     fun searchUser(userName: String) {
