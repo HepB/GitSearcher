@@ -10,6 +10,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 
 import com.github.hepb.gitsearcher.R
+import com.github.hepb.gitsearcher.data.model.view.SearchUserViewModel
 import com.github.hepb.gitsearcher.presenter.SearchPresenter
 import com.github.hepb.gitsearcher.utils.hideKeyboard
 import com.github.hepb.gitsearcher.view.MvpSearchView
@@ -38,8 +39,8 @@ class SearchUserFragment : MvpAppCompatFragment(), MvpSearchView {
         initView()
     }
 
-    override fun setFoundedUsers(userName: String) {
-        Timber.i("Set founded users")
+    override fun setFoundedUsers(users: List<SearchUserViewModel>) {
+        Timber.i(users.toString())
     }
 
     //init view methods

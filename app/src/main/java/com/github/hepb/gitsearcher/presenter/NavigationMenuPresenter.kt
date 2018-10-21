@@ -5,7 +5,7 @@ import com.arellomobile.mvp.MvpPresenter
 import com.github.hepb.gitsearcher.view.MvpBottomNavigationView
 
 @InjectViewState
-class NavigationMenuPresenter() : MvpPresenter<MvpBottomNavigationView>() {
+class NavigationMenuPresenter : MvpPresenter<MvpBottomNavigationView>() {
 
     fun selectSearchUser() = viewState.selectSearchUser()
     fun selectUser() = viewState.selectUser()

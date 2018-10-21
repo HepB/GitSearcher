@@ -7,9 +7,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.github.hepb.gitsearcher.R
 import com.github.hepb.gitsearcher.presenter.NavigationMenuPresenter
-import com.github.hepb.gitsearcher.ui.fragments.ReposListFragment
-import com.github.hepb.gitsearcher.ui.fragments.SearchUserFragment
-import com.github.hepb.gitsearcher.ui.fragments.UserDetailsFragment
+import com.github.hepb.gitsearcher.ui.fragments.*
 import com.github.hepb.gitsearcher.view.MvpBottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
@@ -45,34 +43,54 @@ class MainActivity : MvpAppCompatActivity(),
         Timber.e("onCreate")
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        val fragment = SearchUserFragment.newInstance()
-        goTo(fragment)
+        if (savedInstanceState == null) {
+            goTo(FragmentType.SEARCH_USER)
+        }
     }
 
     override fun selectSearchUser() {
         Timber.d("Function selectSearchUsers")
-        val fragment = SearchUserFragment.newInstance()
-        goTo(fragment)
+        goTo(FragmentType.SEARCH_USER)
     }
 
     override fun selectUser() {
         Timber.d("Function selectUser")
-        val fragment = UserDetailsFragment.newInstance()
-        goTo(fragment)
+        goTo(FragmentType.USER)
     }
 
     override fun selectRepos() {
         Timber.d("Function selectRepos")
-        val fragment = ReposListFragment.newInstance()
-        goTo(fragment)
+        goTo(FragmentType.REPOS)
     }
 
-    private fun goTo(fragment: Fragment) {
+    private fun goTo(fragmentType: FragmentType) {
         val fragmentManager = supportFragmentManager
+        val fragments = supportFragmentManager.fragments
+
+        var currentFragment: Fragment? = null
+        for (fragment in fragments) {
+            if (fragment != null && fragment.isVisible) {
+                currentFragment = fragment
+            }
+        }
+
+        var newFragment = supportFragmentManager.findFragmentByTag(fragmentType.tag)
+
+        if(currentFragment != null
+                && newFragment != null
+                && currentFragment == newFragment) return
+
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame, fragment)
-        //в backStack добавлять не будем, так как все доступно из nav
-        fragmentTransaction.commit()
+        if (currentFragment != null) {
+            fragmentTransaction.hide(currentFragment)
+        }
+        if (newFragment != null) {
+            fragmentTransaction.show(newFragment)
+        } else {
+            newFragment = createFragment(fragmentType)
+            fragmentTransaction.add(R.id.container, newFragment, fragmentType.tag)
+        }
+        fragmentTransaction.commitNow()
     }
 
 }
