@@ -4,5 +4,5 @@ import com.github.hepb.gitsearcher.data.model.view.SearchUserViewModel
 import io.reactivex.Single
 
 interface UsersSearchRepo {
-    fun searchUsers(name: String): Single<List<SearchUserViewModel>>
+    fun searchUsers(name: String, page: Int, perPage: Int): Single<List<SearchUserViewModel>>
 }

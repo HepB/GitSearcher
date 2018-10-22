@@ -7,4 +7,10 @@
     <string name="user_info_fragment_no_data">User Info fragment has no data</string>
     <string name="user_repos_fragment_no_data">User repos fragment has no data</string>
     <string name="button_search_text">Search</string>
+
+    <!--Descriptions-->
+    <string name="description_user_avatar">User Avatar</string>
+
+    <!--Exceptions-->
+    <string name="exception_search_user">Something wrong, cant find users</string>
 </resources>

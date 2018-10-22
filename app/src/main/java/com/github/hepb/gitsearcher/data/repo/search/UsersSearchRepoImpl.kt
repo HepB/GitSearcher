@@ -15,8 +15,8 @@ class UsersSearchRepoImpl(
         private val mapper: SearchUserMapper
 ) : UsersSearchRepo {
 
-    override fun searchUsers(name: String): Single<List<SearchUserViewModel>> {
-        return githubService.searchUsers(name)
+    override fun searchUsers(name: String, page: Int, perPage: Int): Single<List<SearchUserViewModel>> {
+        return githubService.searchUsers(name, page, perPage)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .map { response ->
