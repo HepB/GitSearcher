@@ -1,6 +1,7 @@
 package com.github.hepb.gitsearcher.ui.fragments
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -12,12 +13,24 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.github.hepb.gitsearcher.R
 import com.github.hepb.gitsearcher.data.model.view.SearchUserViewModel
 import com.github.hepb.gitsearcher.presenter.SearchPresenter
+import com.github.hepb.gitsearcher.ui.adapters.SearchUsersViewAdapter
 import com.github.hepb.gitsearcher.utils.hideKeyboard
 import com.github.hepb.gitsearcher.view.MvpSearchView
 import kotlinx.android.synthetic.main.fragment_search_user.*
 import timber.log.Timber
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+
+private const val PAGE_SIZE = 30
 
 class SearchUserFragment : MvpAppCompatFragment(), MvpSearchView {
+    private var page = 1
+    private var isLoading = false
+    private var isLastPage = false
+    private var name: String = ""
+
+    private val layoutManager: LinearLayoutManager = LinearLayoutManager(context)
+    private val adapter = SearchUsersViewAdapter()
 
     @InjectPresenter
     lateinit var searchPresenter: SearchPresenter
@@ -27,6 +40,7 @@ class SearchUserFragment : MvpAppCompatFragment(), MvpSearchView {
         fun newInstance() = SearchUserFragment().apply { arguments = Bundle().apply {} }
     }
 
+    //android callbacks
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -37,10 +51,36 @@ class SearchUserFragment : MvpAppCompatFragment(), MvpSearchView {
     override fun onResume() {
         super.onResume()
         initView()
+        initRecyclerView()
     }
 
-    override fun setFoundedUsers(users: List<SearchUserViewModel>) {
-        Timber.i(users.toString())
+    //view functions
+    override fun setFoundedUsers(foundedUsers: List<SearchUserViewModel>) {
+        Timber.i(foundedUsers.toString())
+        if(foundedUsers.size < PAGE_SIZE) isLastPage = true
+        adapter.searchUserList.addAll(foundedUsers)
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun onLoading() {
+        isLoading = true
+        progressBar.visibility = View.VISIBLE
+    }
+
+    override fun onError(message: String) {
+        Snackbar.make(users, message, Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun onLoadingComplete() {
+        isLoading = false
+        progressBar.visibility = View.GONE
+    }
+
+    //inner methods
+    private fun initRecyclerView() {
+        users.layoutManager = layoutManager
+        users.adapter = adapter
+        users.addOnScrollListener(initScrollListener())
     }
 
     //init view methods
@@ -72,6 +112,30 @@ class SearchUserFragment : MvpAppCompatFragment(), MvpSearchView {
 
     private fun prepareViewAndSearchUser() {
         searchView.hideKeyboard()
-        searchPresenter.searchUser(searchView.text.toString())
+        page = 1
+        name = searchView.text.toString()
+        isLastPage = false
+        adapter.searchUserList.clear()
+        searchPresenter.searchUser(searchView.text.toString(), page, PAGE_SIZE)
+    }
+
+    private fun initScrollListener() = object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            val visibleItemCount = layoutManager.childCount
+            val totalItemCount = layoutManager.itemCount
+            val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+            if (!isLoading && !isLastPage) {
+                if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
+                        && firstVisibleItemPosition >= 0
+                        && totalItemCount >= PAGE_SIZE) {
+                    loadNextPage()
+                }
+            }
+        }
+    }
+
+    private fun loadNextPage() {
+        searchPresenter.searchUser(name, ++page, PAGE_SIZE)
     }
 }
