@@ -1,6 +1,6 @@
 package com.github.hepb.gitsearcher.di
 
-import com.github.hepb.gitsearcher.data.mapper.SearchUserMapper
+import com.github.hepb.gitsearcher.data.mapper.SearchUserRespToViewMaper
 import com.github.hepb.gitsearcher.data.network.GithubService
 import com.github.hepb.gitsearcher.data.repo.search.UsersSearchRepoImpl
 import dagger.Module
@@ -15,10 +15,10 @@ class NetworkModule {
     }
 
     @Provides
-    fun providesUsersSearchRepo(mapper: SearchUserMapper, githubService: GithubService): UsersSearchRepoImpl =
+    fun providesUsersSearchRepo(mapper: SearchUserRespToViewMaper, githubService: GithubService): UsersSearchRepoImpl =
             UsersSearchRepoImpl(githubService, mapper)
 
     @Provides
-    fun providesSearchUserMapper(): SearchUserMapper =
-            SearchUserMapper()
+    fun providesSearchUserMapper(): SearchUserRespToViewMaper =
+            SearchUserRespToViewMaper()
 }

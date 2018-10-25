@@ -9,7 +9,7 @@ import com.github.hepb.gitsearcher.data.model.view.SearchUserViewModel
 import com.github.hepb.gitsearcher.utils.loadPhoto
 import kotlinx.android.synthetic.main.item_search_user.view.*
 
-class SearchUsersViewAdapter: RecyclerView.Adapter<SearchUsersViewAdapter.SearchUserViewHolder>() {
+class SearchUsersViewAdapter(private val listener: (SearchUserViewModel) -> Unit): RecyclerView.Adapter<SearchUsersViewAdapter.SearchUserViewHolder>() {
     val searchUserList: MutableList<SearchUserViewModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, index: Int): SearchUserViewHolder {
@@ -20,16 +20,16 @@ class SearchUsersViewAdapter: RecyclerView.Adapter<SearchUsersViewAdapter.Search
     override fun getItemCount(): Int = searchUserList.size
 
     override fun onBindViewHolder(holder: SearchUserViewHolder, index: Int) {
-        holder.avatar.loadPhoto(searchUserList[index].avatarUrl)
-        holder.name.text = searchUserList[index].login
-        holder.type.text = searchUserList[index].type
-        holder.score.text = searchUserList[index].score.toString()
+        holder.bind(searchUserList[index], listener)
     }
 
     class SearchUserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val avatar = itemView.avatar
-        val name = itemView.name
-        val type = itemView.type
-        val score = itemView.score
+        fun bind(data: SearchUserViewModel, clickListener: (SearchUserViewModel) -> Unit) {
+            itemView.avatar.loadPhoto(data.avatarUrl)
+            itemView.name.text = data.login
+            itemView.type.text = data.type
+            itemView.score.text = data.score.toString()
+            itemView.setOnClickListener{clickListener(data)}
+        }
     }
 }

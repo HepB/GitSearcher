@@ -30,7 +30,7 @@ class SearchUserFragment : MvpAppCompatFragment(), MvpSearchView {
     private var name: String = ""
 
     private val layoutManager: LinearLayoutManager = LinearLayoutManager(context)
-    private val adapter = SearchUsersViewAdapter()
+    private val adapter = SearchUsersViewAdapter { item: SearchUserViewModel -> userItemClicked(item) }
 
     @InjectPresenter
     lateinit var searchPresenter: SearchPresenter
@@ -57,7 +57,7 @@ class SearchUserFragment : MvpAppCompatFragment(), MvpSearchView {
     //view functions
     override fun setFoundedUsers(foundedUsers: List<SearchUserViewModel>) {
         Timber.i(foundedUsers.toString())
-        if(foundedUsers.size < PAGE_SIZE) isLastPage = true
+        if (foundedUsers.size < PAGE_SIZE) isLastPage = true
         adapter.searchUserList.addAll(foundedUsers)
         adapter.notifyDataSetChanged()
     }
@@ -76,15 +76,19 @@ class SearchUserFragment : MvpAppCompatFragment(), MvpSearchView {
         progressBar.visibility = View.GONE
     }
 
+    override fun userSelected(name: String) {
+        val message = getString(R.string.user_selected, name)
+        Snackbar.make(users, message, Snackbar.LENGTH_LONG).show()
+    }
+
     //inner methods
     private fun initRecyclerView() {
         users.layoutManager = layoutManager
         users.adapter = adapter
         users.addOnScrollListener(initScrollListener())
+
     }
 
-    //init view methods
-    //TODO: по хорошему тут бы сделать CustomView, и вынести его в отдельный модуль, но это потом
     private fun initView() {
         initSearchViewBehavior()
         initSearchButtonBehavior()
@@ -137,5 +141,9 @@ class SearchUserFragment : MvpAppCompatFragment(), MvpSearchView {
 
     private fun loadNextPage() {
         searchPresenter.searchUser(name, ++page, PAGE_SIZE)
+    }
+
+    private fun userItemClicked(userModel: SearchUserViewModel) {
+        searchPresenter.selectUser(userModel.login)
     }
 }

@@ -1,6 +1,6 @@
 package com.github.hepb.gitsearcher.data.network
 
-import com.github.hepb.gitsearcher.data.model.response.RepositoryResponseModel
+import com.github.hepb.gitsearcher.data.model.response.RepoResponseModel
 import com.github.hepb.gitsearcher.data.model.response.SearchUsersResponseModel
 import com.github.hepb.gitsearcher.data.model.response.UserResponseModel
 import io.reactivex.Single
@@ -22,7 +22,7 @@ interface GithubService {
     fun getUser(@Path("user") name: String): Single<UserResponseModel>
 
     @GET("/users/{user}/repos")
-    fun getRepos(@Path("user") name: String): Single<List<RepositoryResponseModel>>
+    fun getRepos(@Path("user") name: String): Single<List<RepoResponseModel>>
 
     companion object Factory {
         fun create(): GithubService {
