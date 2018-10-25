@@ -18,8 +18,9 @@ class UserRepoRealm(
         private val toViewMapper: UserDbToViewMapper
 ) : UserRepo {
 
-    override fun replaceUser(name: String): Completable =
-            DaggerNetworkComponent.builder().build().provideApiService()
+    private val githubService = DaggerNetworkComponent.builder().build().provideApiService()
+
+    override fun replaceUser(name: String): Completable = githubService
                     .getUser(name)
                     .flatMapCompletable { result ->
                         val userDbModel = toDbMapper.mapTo(result) //просто маппер привязан к типу БД
