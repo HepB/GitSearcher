@@ -13,4 +13,9 @@
 
     <!--Exceptions-->
     <string name="exception_search_user">Something wrong, cant find users</string>
+
+    <string name="language">lang: %1s</string>
+    <string name="watchers">watch: %1d</string>
+    <string name="created">create: %1s</string>
+    <string name="user_selected">User %1s was selected</string>
 </resources>

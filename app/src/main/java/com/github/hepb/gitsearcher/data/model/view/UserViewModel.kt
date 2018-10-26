@@ -4,7 +4,6 @@ data class UserViewModel(
         val login: String,
         val avatarUrl: String,
         val type: String,
-        val siteAdmin: Boolean,
         val name: String?,
         val company: String?,
         val location: String?,
