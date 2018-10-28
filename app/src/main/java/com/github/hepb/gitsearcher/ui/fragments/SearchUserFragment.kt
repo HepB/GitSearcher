@@ -67,7 +67,7 @@ class SearchUserFragment : MvpAppCompatFragment(), MvpSearchView {
         progressBar.visibility = View.VISIBLE
     }
 
-    override fun onError(message: String) {
+    override fun showMessage(message: String) {
         Snackbar.make(users, message, Snackbar.LENGTH_LONG).show()
     }
 

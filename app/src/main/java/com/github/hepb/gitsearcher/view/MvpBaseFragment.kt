@@ -5,5 +5,5 @@ import com.arellomobile.mvp.MvpView
 interface MvpBaseFragment: MvpView {
     fun onLoading()
     fun onLoadingComplete()
-    fun onError(message: String)
+    fun showMessage(message: String)
 }

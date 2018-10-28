@@ -27,7 +27,7 @@ class ReposViewAdapter: RecyclerView.Adapter<ReposViewAdapter.RepoViewHolder>() 
             holder.name.text= name
             holder.lang.text = App.component.appContext().getString(R.string.language, language)
             holder.watchers.text = App.component.appContext().getString(R.string.watchers, watchersCount)
-            holder.created.text = App.component.appContext().getString(R.string.watchers, createdAt)
+            holder.created.text = App.component.appContext().getString(R.string.created, createdAt)
         }
     }
 

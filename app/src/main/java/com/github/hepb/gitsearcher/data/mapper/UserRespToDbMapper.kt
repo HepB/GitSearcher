@@ -15,6 +15,7 @@ class UserRespToDbMapper : EntityMapper<UserResponseModel, UserDbModel> {
             result.location = location
             result.name = name
             result.followers = followers
+            result.type = type
             result.following = following
             result.publicReposNum = publicReposNum
             result.createdAt = isoStringToLong(createdAt)
