@@ -1,7 +1,7 @@
 package com.github.hepb.gitsearcher.di
 
 import com.github.hepb.gitsearcher.data.mapper.RepoRespToDbMapper
-import com.github.hepb.gitsearcher.data.mapper.SearchUserRespToViewMaper
+import com.github.hepb.gitsearcher.data.mapper.SearchUserRespToViewMapper
 import com.github.hepb.gitsearcher.data.mapper.UserRespToDbMapper
 import com.github.hepb.gitsearcher.data.network.GithubService
 import com.github.hepb.gitsearcher.data.repo.search.UsersSearchRepoImpl
@@ -19,7 +19,7 @@ class NetworkModule {
     @Provides
     fun providesUsersSearchRepo(
             githubService: GithubService,
-            searchUserMapper: SearchUserRespToViewMaper,
+            searchUserMapper: SearchUserRespToViewMapper,
             userMapper: UserRespToDbMapper,
             repoMapper: RepoRespToDbMapper
     ): UsersSearchRepoImpl =
@@ -30,8 +30,8 @@ class NetworkModule {
                     repoMapper)
 
     @Provides
-    fun providesSearchUserMapper(): SearchUserRespToViewMaper =
-            SearchUserRespToViewMaper()
+    fun providesSearchUserMapper(): SearchUserRespToViewMapper =
+            SearchUserRespToViewMapper()
 
     @Provides
     fun providesUserMapper(): UserRespToDbMapper = UserRespToDbMapper()

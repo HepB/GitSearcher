@@ -1,7 +1,5 @@
 package com.github.hepb.gitsearcher.utils
 
-import android.content.res.Resources
-import timber.log.Timber
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -11,14 +9,13 @@ const val VIEW_PATTERN = "dd.MM.yyyy"
 
 fun isoStringToLong(isoDate: String): Long {
     val tz = TimeZone.getTimeZone("UTC")
-    val locale = Resources.getSystem().configuration.locale
-    val df = SimpleDateFormat(ISO_PATTERN, locale)
+    val df = SimpleDateFormat(ISO_PATTERN)
     df.timeZone = tz
 
     try {
         return df.parse(isoDate).time
     } catch (e: ParseException) {
-        Timber.e(e.localizedMessage)
+        e.printStackTrace()
     }
     return 0
 }

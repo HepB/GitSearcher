@@ -1,7 +1,7 @@
 package com.github.hepb.gitsearcher.data.repo.search
 
 import com.github.hepb.gitsearcher.data.mapper.RepoRespToDbMapper
-import com.github.hepb.gitsearcher.data.mapper.SearchUserRespToViewMaper
+import com.github.hepb.gitsearcher.data.mapper.SearchUserRespToViewMapper
 import com.github.hepb.gitsearcher.data.mapper.UserRespToDbMapper
 import com.github.hepb.gitsearcher.data.model.database.RepoDbModel
 import com.github.hepb.gitsearcher.data.model.database.UserDbModel
@@ -17,7 +17,7 @@ import java.lang.Exception
 
 class UsersSearchRepoImpl(
         private val githubService: GithubService,
-        private val searchUserRespToViewMapper: SearchUserRespToViewMaper,
+        private val searchUserRespToViewMapper: SearchUserRespToViewMapper,
         private val userToDbMapper: UserRespToDbMapper,
         private val repoRespToDbMapper: RepoRespToDbMapper
 ) : UsersSearchRepo {
