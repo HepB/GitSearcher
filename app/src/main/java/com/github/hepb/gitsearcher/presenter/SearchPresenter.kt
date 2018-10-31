@@ -10,7 +10,6 @@ import com.github.hepb.gitsearcher.di.DaggerNetworkComponent
 import com.github.hepb.gitsearcher.view.MvpSearchView
 
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Action
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.PublishSubject
 
@@ -20,12 +19,10 @@ class SearchPresenter : MvpPresenter<MvpSearchView>() {
     private val disposables: MutableList<Disposable> = mutableListOf()
     private lateinit var publishSubject: PublishSubject<String>
     private lateinit var usersSearchRepo: UsersSearchRepo
-    private lateinit var userRepo: UserRepo
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         usersSearchRepo = DaggerNetworkComponent.builder().build().provideUsersSearchRepoImpl()
-        userRepo = DaggerDbComponent.builder().build().provideUserRepoRealm()
     }
 
     fun searchUser(userName: String, page: Int, perPage: Int) {
@@ -38,7 +35,7 @@ class SearchPresenter : MvpPresenter<MvpSearchView>() {
                 },
                 { error ->
                     viewState.onLoadingComplete()
-                    viewState.onError(error.localizedMessage)
+                    viewState.showMessage(error.localizedMessage)
                 })
         disposables.add(disposable)
     }
@@ -51,14 +48,15 @@ class SearchPresenter : MvpPresenter<MvpSearchView>() {
 
     fun selectUser(name: String) {
         viewState.onLoading()
-        disposables.add(userRepo.replaceUser(name).subscribeBy(
+        disposables.add(usersSearchRepo.replaceUser(name).subscribeBy(
                 onComplete = {
                     viewState.userSelected(name)
                     viewState.onLoadingComplete()
                 },
                 onError = {
                     it.printStackTrace()
-                    viewState.onError(it.toString())
+                    viewState.onLoadingComplete()
+                    viewState.showMessage(it.toString())
                 }
         ))
     }

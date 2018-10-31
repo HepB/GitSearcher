@@ -5,7 +5,7 @@ import com.github.hepb.gitsearcher.data.model.response.UserResponseModel
 import com.github.hepb.gitsearcher.utils.isoStringToLong
 
 class UserRespToDbMapper : EntityMapper<UserResponseModel, UserDbModel> {
-    override fun mapTo(model: UserResponseModel): UserDbModel {
+    override fun map(model: UserResponseModel): UserDbModel {
         with(model) {
             val result = UserDbModel()
             result.login = login
@@ -15,6 +15,7 @@ class UserRespToDbMapper : EntityMapper<UserResponseModel, UserDbModel> {
             result.location = location
             result.name = name
             result.followers = followers
+            result.type = type
             result.following = following
             result.publicReposNum = publicReposNum
             result.createdAt = isoStringToLong(createdAt)

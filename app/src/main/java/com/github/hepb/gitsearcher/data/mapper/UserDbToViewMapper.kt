@@ -5,7 +5,7 @@ import com.github.hepb.gitsearcher.data.model.view.UserViewModel
 import com.github.hepb.gitsearcher.utils.timeToSting
 
 class UserDbToViewMapper : EntityMapper<UserDbModel, UserViewModel> {
-    override fun mapTo(model: UserDbModel): UserViewModel =
+    override fun map(model: UserDbModel): UserViewModel =
             with(model) {
                 UserViewModel(
                         login = login,

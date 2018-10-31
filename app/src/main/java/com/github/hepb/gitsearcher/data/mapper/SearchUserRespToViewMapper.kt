@@ -3,8 +3,8 @@ package com.github.hepb.gitsearcher.data.mapper
 import com.github.hepb.gitsearcher.data.model.response.SearchUserResponseModel
 import com.github.hepb.gitsearcher.data.model.view.SearchUserViewModel
 
-class SearchUserRespToViewMaper : EntityMapper<SearchUserResponseModel, SearchUserViewModel> {
-    override fun mapTo(model: SearchUserResponseModel): SearchUserViewModel =
+class SearchUserRespToViewMapper : EntityMapper<SearchUserResponseModel, SearchUserViewModel> {
+    override fun map(model: SearchUserResponseModel): SearchUserViewModel =
             with(model) {
                 return SearchUserViewModel(
                         login = login,

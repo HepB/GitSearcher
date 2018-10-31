@@ -12,10 +12,23 @@
     <string name="description_user_avatar">User Avatar</string>
 
     <!--Exceptions-->
-    <string name="exception_search_user">Something wrong, cant find users</string>
+    <string name="exception_search_user">Something wrong, can not find users</string>
 
     <string name="language">lang: %1s</string>
     <string name="watchers">watch: %1d</string>
     <string name="created">create: %1s</string>
+
     <string name="user_selected">User %1s was selected</string>
+    <string name="user_not_loaded">User was not loaded</string>
+    <string name="repos_not_loaded">Repositories not loaded</string>
+
+    <string name="user_name">Name: %1s</string>
+    <string name="user_organization">Organization: %1s</string>
+    <string name="user_location">Location: %1s</string>
+    <string name="user_type">Type: %1s</string>
+    <string name="user_repos_count">Public repos: %1d</string>
+    <string name="user_followers">Followers: %1d</string>
+    <string name="user_following">Following: %1d</string>
+    <string name="user_created_at">Created at: %1s</string>
+    <string name="user_updated_at">Updated at: %1s</string>
 </resources>

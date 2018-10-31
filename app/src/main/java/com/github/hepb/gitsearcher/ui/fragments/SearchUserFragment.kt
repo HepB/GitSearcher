@@ -16,7 +16,10 @@ import com.github.hepb.gitsearcher.presenter.SearchPresenter
 import com.github.hepb.gitsearcher.ui.adapters.SearchUsersViewAdapter
 import com.github.hepb.gitsearcher.utils.hideKeyboard
 import com.github.hepb.gitsearcher.view.MvpSearchView
-import kotlinx.android.synthetic.main.fragment_search_user.*
+import kotlinx.android.synthetic.main.fragment_search_user.progressBar
+import kotlinx.android.synthetic.main.fragment_search_user.users
+import kotlinx.android.synthetic.main.fragment_search_user.buttonSearch
+import kotlinx.android.synthetic.main.fragment_search_user.searchView
 import timber.log.Timber
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -45,11 +48,14 @@ class SearchUserFragment : MvpAppCompatFragment(), MvpSearchView {
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
+        if (savedInstanceState != null) {
+
+        }
         return inflater.inflate(R.layout.fragment_search_user, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         initView()
         initRecyclerView()
     }
@@ -67,7 +73,7 @@ class SearchUserFragment : MvpAppCompatFragment(), MvpSearchView {
         progressBar.visibility = View.VISIBLE
     }
 
-    override fun onError(message: String) {
+    override fun showMessage(message: String) {
         Snackbar.make(users, message, Snackbar.LENGTH_LONG).show()
     }
 
@@ -103,7 +109,7 @@ class SearchUserFragment : MvpAppCompatFragment(), MvpSearchView {
             }
         })
         searchView.setOnEditorActionListener { _, _, _ ->
-            prepareViewAndSearchUser()
+            searchView.hideKeyboard()
             false
         }
     }
