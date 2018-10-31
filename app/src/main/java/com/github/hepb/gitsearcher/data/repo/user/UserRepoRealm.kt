@@ -22,7 +22,7 @@ class UserRepoRealm(
                     val dbUsers = realm.where(UserDbModel::class.java).findAll()
                     if (dbUsers.size > 0) {
                         val dbUser = dbUsers[0]
-                        val viewUser = toViewMapper.mapTo(dbUser)
+                        val viewUser = toViewMapper.map(dbUser)
                         maybeEmitter.onSuccess(viewUser)
                     } else {
                         maybeEmitter.onComplete()

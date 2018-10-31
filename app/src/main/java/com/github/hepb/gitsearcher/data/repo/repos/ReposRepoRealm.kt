@@ -17,7 +17,7 @@ class ReposRepoRealm(private val toViewMapper: RepoDbToViewMapper) : ReposRepo {
                     val repos = realm.where(RepoDbModel::class.java).findAll()
                     if (repos.size > 0) {
                         val result: MutableList<RepositoryViewModel> = mutableListOf()
-                        repos.forEach { result.add(toViewMapper.mapTo(it))}
+                        repos.forEach { result.add(toViewMapper.map(it))}
                         maybeEmitter.onSuccess(result)
                     } else {
                         maybeEmitter.onComplete()

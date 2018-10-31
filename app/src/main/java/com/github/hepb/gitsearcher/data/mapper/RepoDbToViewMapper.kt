@@ -5,7 +5,7 @@ import com.github.hepb.gitsearcher.data.model.view.RepositoryViewModel
 import com.github.hepb.gitsearcher.utils.timeToSting
 
 class RepoDbToViewMapper : EntityMapper<RepoDbModel, RepositoryViewModel> {
-    override fun mapTo(model: RepoDbModel): RepositoryViewModel {
+    override fun map(model: RepoDbModel): RepositoryViewModel {
         with(model) {
             return RepositoryViewModel(
                     name = name,

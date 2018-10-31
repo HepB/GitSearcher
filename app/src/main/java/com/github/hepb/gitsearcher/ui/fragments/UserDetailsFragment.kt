@@ -56,7 +56,6 @@ class UserDetailsFragment : MvpAppCompatFragment(), MvpUserView {
         following.text = getString(R.string.user_following, user.following)
         createdAt.text = getString(R.string.user_created_at, user.createdAt)
         updatedAt.text = getString(R.string.user_updated_at, user.updatedAt)
-        noData.visibility = View.GONE
     }
 
     override fun onLoading() {

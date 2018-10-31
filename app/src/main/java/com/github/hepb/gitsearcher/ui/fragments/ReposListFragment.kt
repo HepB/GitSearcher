@@ -13,7 +13,10 @@ import com.github.hepb.gitsearcher.data.model.view.RepositoryViewModel
 import com.github.hepb.gitsearcher.presenter.RepoPresenter
 import com.github.hepb.gitsearcher.ui.adapters.ReposViewAdapter
 import com.github.hepb.gitsearcher.view.MvpReposView
-import kotlinx.android.synthetic.main.fragment_repos_list.*
+import kotlinx.android.synthetic.main.fragment_repos_list.noData
+import kotlinx.android.synthetic.main.fragment_repos_list.progress
+import kotlinx.android.synthetic.main.fragment_repos_list.repos
+
 
 class ReposListFragment : MvpAppCompatFragment(), MvpReposView {
 

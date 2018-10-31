@@ -22,6 +22,6 @@ class RepoDbToViewMapperTest {
 
     @Test
     fun mapTo() {
-        assertThat(mapper.mapTo(repoDb), `is`(repositoryViewModel))
+        assertThat(mapper.map(repoDb), `is`(repositoryViewModel))
     }
 }

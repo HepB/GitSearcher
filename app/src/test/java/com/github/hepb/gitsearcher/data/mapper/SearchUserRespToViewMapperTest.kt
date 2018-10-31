@@ -22,6 +22,6 @@ class SearchUserRespToViewMapperTest {
 
     @Test
     fun mapTo() {
-        assertThat(mapper.mapTo(respModel), `is`(viewModel))
+        assertThat(mapper.map(respModel), `is`(viewModel))
     }
 }

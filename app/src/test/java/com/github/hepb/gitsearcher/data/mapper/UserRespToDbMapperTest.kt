@@ -22,6 +22,6 @@ class UserRespToDbMapperTest {
 
     @Test
     fun mapTo() {
-        assertThat(mapper.mapTo(respModel), `is`(dbModel))
+        assertThat(mapper.map(respModel), `is`(dbModel))
     }
 }

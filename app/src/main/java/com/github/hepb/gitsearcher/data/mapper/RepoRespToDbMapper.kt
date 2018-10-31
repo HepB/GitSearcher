@@ -5,7 +5,7 @@ import com.github.hepb.gitsearcher.data.model.response.RepoResponseModel
 import com.github.hepb.gitsearcher.utils.isoStringToLong
 
 class RepoRespToDbMapper: EntityMapper<RepoResponseModel, RepoDbModel> {
-    override fun mapTo(model: RepoResponseModel): RepoDbModel {
+    override fun map(model: RepoResponseModel): RepoDbModel {
         with(model) {
             val result = RepoDbModel()
             result.name = name

@@ -22,6 +22,6 @@ class UserDbToViewMapperTest {
 
     @Test
     fun mapTo() {
-        assertThat(mapper.mapTo(dbModel), `is`(viewModel))
+        assertThat(mapper.map(dbModel), `is`(viewModel))
     }
 }

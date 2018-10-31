@@ -25,7 +25,7 @@ class UsersSearchRepoImpl(
     override fun replaceUser(name: String): Completable = githubService
             .getUser(name)
             .doOnSuccess { result ->
-                val userDbModel = userToDbMapper.mapTo(result) //просто маппер привязан к типу БД
+                val userDbModel = userToDbMapper.map(result) //просто маппер привязан к типу БД
                 val realm: Realm = Realm.getDefaultInstance()
                 realm.beginTransaction()
                 try {
@@ -40,7 +40,7 @@ class UsersSearchRepoImpl(
             }.flatMap { githubService.getRepos(name) }
             .flatMapCompletable { result ->
                 val reposDbModel = RealmList<RepoDbModel>()
-                result.forEach { reposDbModel.add(repoRespToDbMapper.mapTo(it)) }
+                result.forEach { reposDbModel.add(repoRespToDbMapper.map(it)) }
                 val realm: Realm = Realm.getDefaultInstance()
                 realm.beginTransaction()
                 try {
@@ -62,7 +62,7 @@ class UsersSearchRepoImpl(
                 .subscribeOn(Schedulers.io())
                 .map { response ->
                     val viewModels: MutableList<SearchUserViewModel> = mutableListOf()
-                    response.items.forEach { viewModels.add(searchUserRespToViewMapper.mapTo(it)) }
+                    response.items.forEach { viewModels.add(searchUserRespToViewMapper.map(it)) }
                     return@map viewModels
                 }
     }
