@@ -7,6 +7,8 @@ import com.github.hepb.gitsearcher.di.AppModule
 import com.github.hepb.gitsearcher.di.DaggerAppComponent
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
 
 class App : Application() {
     companion object {
@@ -20,6 +22,8 @@ class App : Application() {
         Realm.init(this)
         val configuration = RealmConfiguration.Builder().build()
         Realm.setDefaultConfiguration(configuration)
+
+        Fabric.with(this, Crashlytics())
 
         component = DaggerAppComponent
                 .builder()
